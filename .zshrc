@@ -28,13 +28,13 @@ compinit
 ### Plugins
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
-source /home/siddarthg/dotfiles/zshrc_plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/zshrc_plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
-source /home/siddarthg/dotfiles/zshrc_plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/zshrc_plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-source /home/siddarthg/dotfiles/zshrc_plugin/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/zshrc_plugin/zsh-history-substring-search/zsh-history-substring-search.zsh
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 ### Bindkeys
@@ -45,6 +45,7 @@ echo -e '\e[5 q' ##enable cursor blink
 
 ## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[[ ! -f ~/.zshrc_alias ]] || source ~/.zshrc_alias 
+[[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
+[[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
