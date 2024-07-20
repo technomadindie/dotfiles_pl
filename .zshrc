@@ -26,7 +26,7 @@ compinit
 ## End of lines added by compinstall
 #
 ### Plugins
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/zshrc_plugin/powerlevel10k/powerlevel10k.zsh-theme
 
 source ~/zshrc_plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)

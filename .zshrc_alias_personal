@@ -17,6 +17,7 @@ alias checkbuild='egrep -i "(\*\*|error)" "$@" | grep -v ignore'
 alias nv='cd $NV'
 alias igrep='grep -i'
 alias lc='wc -l'
+alias cat='bat --paging=never'
 
 # Git aliases
 alias gpush='git push origin HEAD:main'
