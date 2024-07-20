@@ -1,3 +1,10 @@
+git clone git@github.com:technomadindie/dotfiles_pl.git
+
+All the below steps are now done using script
+first run symlink script
+chmod +777 sym_link_generator.sh
+
+then chmod +777 plugin_install.sh
 Steps:
 1. Go to home using "cd "
 2. ln -s <original_path> .zshrc | all the files like this
