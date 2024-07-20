@@ -1,0 +1,41 @@
+# Abbreviations
+alias a='alias'
+alias c='clear'
+alias g='grep'
+alias gg='gvim'
+alias h='history'
+alias ll='ls -ltr'
+alias la='ls -altr'
+alias dir='ls -l'
+alias hg='history | grep'
+alias po='popd'
+alias pu='pushd'
+alias resource='source ~/.zshrc'
+
+# Program aliases
+alias checkbuild='egrep -i "(\*\*|error)" "$@" | grep -v ignore'
+alias nv='cd $NV'
+alias igrep='grep -i'
+alias lc='wc -l'
+
+# Git aliases
+alias gpush='git push origin HEAD:main'
+alias gpull='git pull origin HEAD:main'
+
+# Custom aliases
+
+# Environment paths
+
+# Environment variables
+
+# Navigation aliases
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias .-='cd -'
+
+# Other custom aliases
+alias re='realpath'
+alias fs='fd --type f | fzf'
+alias swp_find='find . -type f -iname ".*" | grep swp'

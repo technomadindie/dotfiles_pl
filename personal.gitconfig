@@ -1,0 +1,29 @@
+[user]
+	name = siddarthg
+	email = siddarthg@nvidia.com
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[pull]
+  rebase = true
+[diff]
+#  tool = tkdiff 
+  tool = meld 
+[commit]
+  template=/mswg/projects/fw/fw_ver/hca_fw_tools/design_commit_template
+[core]
+	autocrlf = input
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[status]
+	showUntrackedFiles = no
+[log]
+	format = %h %s
+[format]
+	pretty = %h %s

@@ -1,0 +1,7 @@
+Use full paths when creating links
+Use symbolic links only
+
+-- After cloning dotfiles repository, run the following commands
+
+ln -s /home/achinm/dotfiles/nvim/init.lua /home/achinm/.config/nvim/init.lua
+ln -s -t /home/achinm/.config/nvim /home/achinm/dotfiles/nvim/lua
