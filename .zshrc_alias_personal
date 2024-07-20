@@ -21,7 +21,7 @@ alias cat='bat --paging=never'
 
 # Git aliases
 alias gpush='git push origin HEAD:main'
-alias gpull='git pull origin HEAD:main'
+alias gpull='git fetch origin && git pull origin HEAD:main'
 
 # Custom aliases
 
