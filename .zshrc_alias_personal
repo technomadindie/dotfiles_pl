@@ -12,6 +12,25 @@ alias po='popd'
 alias pu='pushd'
 alias resource='source ~/.zshrc'
 
+alias gs='git status'
+alias ga='git add'
+alias gp='git push'
+alias gpo='git push origin'
+alias gtd='git tag --delete'
+alias gtdr='git tag --delete origin'
+alias gr='git branch -r'
+alias gplo='git pull origin'
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias gdt='git difftool'
+alias gco='git checkout '
+alias gl='git log'
+alias gr='git remote'
+alias grs='git remote show'
+alias glo='git log --pretty="oneline"'
+alias glol='git log --graph --oneline --decorate'
+
 # Program aliases
 alias checkbuild='egrep -i "(\*\*|error)" "$@" | grep -v ignore'
 alias nv='cd $NV'
@@ -24,7 +43,8 @@ alias gpush='git push origin HEAD:main'
 alias gpull='git fetch origin && git pull origin HEAD:main'
 
 # Custom aliases
-
+alias d='dirs -v'
+for index ({1..20}) alias "$index"="cd +${index}"; unset index
 # Environment paths
 
 # Environment variables
@@ -40,3 +60,7 @@ alias .-='cd -'
 alias re='realpath'
 alias fs='fd --type f | fzf'
 alias swp_find='find . -type f -iname ".*" | grep swp'
+
+
+## PATHS
+export EDITOR='nvim'
