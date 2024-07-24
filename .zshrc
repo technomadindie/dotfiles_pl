@@ -8,6 +8,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 echo "Welcome $USER! Hope you have a good day!"
+## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
+[[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
+###########
+##fzf setup
+###########
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_TMUX=1
+export FZF_TMUX_OPTS='-p80%,60%'
+# CTRL-T - Paste the selected file path(s) into the command line
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
+#export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
+export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --preview 'cat {}' --border --margin=1 --padding=1"
+alias cool-find='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 ##############
 # HISTORY ####
 ##############
@@ -41,6 +56,7 @@ compinit
 ### Plugins
 source ~/zshrc_plugin/powerlevel10k/powerlevel10k.zsh-theme
 
+source ~/zshrc_plugin/fzf-tab/fzf-tab.zsh ## show tabs automatically ; Must be before zsh-autosuggestions;
 source ~/zshrc_plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -67,11 +83,22 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
-[[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#######
+# FZF-TAB Setup
+#######
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
 #zprof

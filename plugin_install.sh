@@ -16,5 +16,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/zshrc_plugin/zsh-au
 echo "################################################### zsh-autosuggestions installation completed successfully!################################################### "
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git  ~/zshrc_plugin/powerlevel10k
 echo "###################################################  Powerlevel10k installation completed successfully!################################################### "
-
+git clone https://github.com/Aloxaf/fzf-tab.git ~/zshrc_plugin/fzf-tab
+echo "###################################################  FZF-TAB installation completed successfully!################################################### "
 echo "Installation completed successfully!"

@@ -10,7 +10,6 @@ alias dir='ls -l'
 alias hg='history | grep'
 alias po='popd'
 alias pu='pushd'
-alias resource='source ~/.zshrc'
 
 alias gs='git status'
 alias ga='git add'
