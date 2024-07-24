@@ -61,7 +61,7 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 echo -e '\e[5 q' ##enable cursor blink
 echo -ne '\e]12;#FF0000\a' # Change cursor color to red
-
+bindkey "^?" backward-delete-char ## To use backspace to delete words after insertmode->normalmode->insertmode
 ## Edit command line commands in $EDITOR
 autoload -Uz edit-command-line
 zle -N edit-command-line
