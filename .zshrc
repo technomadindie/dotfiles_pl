@@ -23,7 +23,7 @@ setopt HIST_IGNORE_SPACE         # Ignore commands that start with space
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion; when using !$, it will not run the command
 
 setopt autocd notify
-
+zstyle ':completion:*' menu select
 #############
 # cd into any directory
 #############
@@ -52,6 +52,8 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
 source ~/zshrc_plugin/bd.zsh ## if you are in /a/b/c/d/e/t ; you can directly jump to a using "bd a"
+
+
 ### Bindkeys
 bindkey -v
 export KEYTIMEOUT=1
@@ -59,6 +61,12 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 echo -e '\e[5 q' ##enable cursor blink
 echo -ne '\e]12;#FF0000\a' # Change cursor color to red
+
+## Edit command line commands in $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 ## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
