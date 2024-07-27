@@ -75,3 +75,17 @@ It’s where bd can help you. Imagine that you’re in the folder ~/a/b/c/d. You
 The Zsh completion is even included. Awesomeness!
 
 To use it, you need to source the file bd.zsh.
+
+
+
+###########################################################################################################################################
+
+# ToDo
+3. Learn about vi-mode
+4. learn about lua.init, how to modify nbim to add all the functionality
+6. Install :
+7.     Zinit
+8.     https://github.com/jeffreytse/zsh-vi-mode
+9.     Zoxide using https://www.youtube.com/watch?v=aghxkpyRVDY
+10.     stow using https://www.youtube.com/watch?v=y6XCebnB9gs
+11. 
