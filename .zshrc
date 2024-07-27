@@ -12,6 +12,7 @@ echo "Welcome $USER! Hope you have a good day!"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
 [[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
+
 ###########
 ##fzf setup
 ###########
@@ -20,9 +21,11 @@ export FZF_TMUX=1
 export FZF_TMUX_OPTS='-p80%,60%'
 # CTRL-T - Paste the selected file path(s) into the command line
 export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
-#export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'"
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --preview 'cat {}' --border --margin=1 --padding=1"
+export FZF_CTRL_T_OPTS="--preview '/home/utils/bat-0.23.0/bin/bat --style=numbers --color=always --line-range :500 {}'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+#export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --preview 'cat {}' --border --margin=1 --padding=1"
 alias cool-find='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+
 ##############
 # HISTORY ####
 ##############
@@ -48,9 +51,12 @@ setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
 setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
 
 
+zmodload zsh/complist
 zstyle :compinstall filename '/home/siddarthg/.zshrc'
-autoload -Uz compinit
-compinit
+
+autoload -U compinit; compinit
+_comp_options+=(globdots) # With hidden files
+
 ## End of lines added by compinstall
 #
 ### Plugins
@@ -68,7 +74,6 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
 source ~/zshrc_plugin/bd.zsh ## if you are in /a/b/c/d/e/t ; you can directly jump to a using "bd a"
-
 
 ### Bindkeys
 bindkey -v
@@ -95,8 +100,7 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+#zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree'
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
