@@ -88,4 +88,9 @@ To use it, you need to source the file bd.zsh.
 8.     https://github.com/jeffreytse/zsh-vi-mode
 9.     Zoxide using https://www.youtube.com/watch?v=aghxkpyRVDY
 10.     stow using https://www.youtube.com/watch?v=y6XCebnB9gs
-11. 
+
+## NVIM 
+https://github.com/alvarojsino813/nvim-config-guide
+https://vim.rtorr.com/
+https://builtin.com/software-engineering-perspectives/neovim-configuration
+https://github.com/jeffreytse/zsh-vi-mode
