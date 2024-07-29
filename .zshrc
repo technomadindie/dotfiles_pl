@@ -1,5 +1,6 @@
-#zmodload zsh/zprof
-
+# ================================
+# Powerlevel10k Instant Prompt
+# ================================
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -7,28 +8,63 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-echo "Welcome $USER! Hope you have a good day!"
-## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# ================================
+# Zinit Configuration
+# ================================
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+# ================================
+# Load Custom Aliases
+# ================================
 [[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
 [[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
 
-###########
-##fzf setup
-###########
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_TMUX=1
-export FZF_TMUX_OPTS='-p80%,60%'
-# CTRL-T - Paste the selected file path(s) into the command line
-export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '/home/utils/bat-0.23.0/bin/bat --style=numbers --color=always --line-range :500 {}'"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-#export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --preview 'cat {}' --border --margin=1 --padding=1"
-alias cool-find='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+# ================================
+# Welcome Message
+# ================================
+echo "Welcome $USER! Hope you have a good day!"
 
-##############
-# HISTORY ####
-##############
+# ================================
+# Zinit Plugins
+# ================================
+# Add Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Add zsh plugins
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions 
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+zinit light Aloxaf/fzf-tab
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+
+
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zinit light trapd00r/LS_COLORS
+
+zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
+zinit light sharkdp/bat
+# ================================
+# Plugins Custom Settings
+# ================================
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
+# ================================
+# Autoload and Compinit
+# ================================
+autoload -Uz compinit; compinit -u
+comp_options+=(globdots) # With hidden files
+
+# ================================
+# History Settings
+# ================================
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
@@ -40,42 +76,24 @@ setopt HIST_IGNORE_DUPS          # Don't record immediate duplicates
 setopt HIST_IGNORE_SPACE         # Ignore commands that start with space
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion; when using !$, it will not run the command
 
+# ================================
+# Directory Navigation
+# ================================
 setopt autocd notify
 zstyle ':completion:*' menu select
-#############
-# cd into any directory
-#############
-### directories will be in stack; use option 'd' to go into any directory
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# ================================
+# Auto-Pushd Settings
+# ================================
 setopt AUTO_PUSHD           # Push the current directory visited on the stack.
 setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
 setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-
-
 zmodload zsh/complist
-zstyle :compinstall filename '/home/siddarthg/.zshrc'
 
-autoload -U compinit; compinit
-_comp_options+=(globdots) # With hidden files
-
-## End of lines added by compinstall
-#
-### Plugins
-source ~/zshrc_plugin/powerlevel10k/powerlevel10k.zsh-theme
-
-source ~/zshrc_plugin/fzf-tab/fzf-tab.zsh ## show tabs automatically ; Must be before zsh-autosuggestions;
-source ~/zshrc_plugin/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-
-source ~/zshrc_plugin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-source ~/zshrc_plugin/zsh-history-substring-search/zsh-history-substring-search.zsh
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
-source ~/zshrc_plugin/bd.zsh ## if you are in /a/b/c/d/e/t ; you can directly jump to a using "bd a"
-
-### Bindkeys
+# ================================
+# Key Bindings
+# ================================
 bindkey -v
 export KEYTIMEOUT=1
 bindkey '^[[A' history-substring-search-up
@@ -88,21 +106,28 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-#######
+# ================================
+# FZF Setup
+# ================================
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_TMUX=1
+export FZF_TMUX_OPTS='-p80%,60%'
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
+export FZF_CTRL_T_OPTS="--preview '/home/utils/bat-0.23.0/bin/bat --style=numbers --color=always --line-range :500 {}'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+alias cool-find='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+
+# ================================
 # FZF-TAB Setup
-#######
-# disable sort when completing `git checkout`
+# ================================
 zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
-#zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree'
-# switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+zstyle ':completion:*:*:*:*' ignored-patterns 'p4'
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
-#zprof
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
