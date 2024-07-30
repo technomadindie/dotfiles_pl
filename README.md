@@ -7,7 +7,8 @@
 5. `./sym_link_generator.sh` ; Choose .zshrc,zshrc_plugin,.zshrc_alias_*
 6. `cd ../dotfiles_nv`
 7. `./sym_link_generator.sh` ; Choose .zshrc_alias_*
-
+8. Set default font as Hack Nerd * in terminal prfiles in preferences section of Terminal Window
+9. Set default shell as `/home/utils/zsh-5.9/bin/zsh` in terminal "command" section
 
 
 ## WIP [Ignore if not Author/Maintainer]
