@@ -10,16 +10,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
+## WIP [Ignore if not Author/Maintainer]
 git clone git@github.com:technomadindie/dotfiles_pl.git
 
 All the below steps are now done using script
