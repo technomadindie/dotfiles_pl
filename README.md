@@ -1,3 +1,25 @@
+## Steps to setup on VNC/NV
+0. `mkdir -p dotfiles; cd dotfiles;`
+1. `git clone https://github.com/technomadindie/dotfiles_pl.git`
+2. `git clone https://gitlab-master.nvidia.com/siddarthg/dotfiles_nv.git`
+3. `cd dotfiles_pl`
+4. `./plugin_install.sh`
+5. `./sym_link_generator.sh` ; Choose .zshrc,zshrc_plugin,.zshrc_alias_*
+6. `cd ../dotfiles_nv`
+7. `./sym_link_generator.sh` ; Choose .zshrc_alias_*
+
+
+
+
+
+
+
+
+
+
+
+
+
 git clone git@github.com:technomadindie/dotfiles_pl.git
 
 All the below steps are now done using script
