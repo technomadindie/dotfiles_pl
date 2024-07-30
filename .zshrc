@@ -9,12 +9,20 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # ================================
+# Autoload and Compinit
+# ================================
+zmodload zsh/complist
+autoload -Uz compinit; compinit -u
+comp_options+=(globdots) # With hidden files
+
+# ================================
 # Zinit Configuration
 # ================================
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
+
 # ================================
 # Load Custom Aliases
 # ================================
@@ -29,25 +37,26 @@ echo "Welcome $USER! Hope you have a good day!"
 # ================================
 # Zinit Plugins
 # ================================
+
 # Add Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add zsh plugins
+zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions 
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
-zinit light Aloxaf/fzf-tab
-zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
-
+#zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
 zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
-zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
-zinit light sharkdp/bat
+#zinit ice as"command" from"gh-r" mv"bat* -> bat" pick"bat/bat"
+#zinit light sharkdp/bat
+
 # ================================
 # Plugins Custom Settings
 # ================================
@@ -55,12 +64,9 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-# ================================
-# Autoload and Compinit
-# ================================
-autoload -Uz compinit; compinit -u
-comp_options+=(globdots) # With hidden files
+#ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
+#ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+#ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_UNDERLINE
 
 # ================================
 # History Settings
@@ -89,7 +95,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 setopt AUTO_PUSHD           # Push the current directory visited on the stack.
 setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
 setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-zmodload zsh/complist
 
 # ================================
 # Key Bindings
@@ -106,10 +111,16 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
+#export EDITOR=vim
+#export ZVM_VI_EDITOR=$EDITOR
+#ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+#ZVM_VI_EDITOR=$EDITOR
 # ================================
 # FZF Setup
 # ================================
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.fzf.zsh
+source ~/.fzf/shell/completion.zsh
+source ~/.fzf/shell/key-bindings.zsh
 export FZF_TMUX=1
 export FZF_TMUX_OPTS='-p80%,60%'
 export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
@@ -124,10 +135,13 @@ zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:*' switch-group '<' '>'
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+#zstyle ':fzf-tab:*' switch-group '<' '>'
+#zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':completion:*:*:*:*' ignored-patterns 'p4'
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+zstyle ':fzf-tab:complete:cd*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:ls*' fzf-preview 'ls --color $realpath'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
+source ~/zshrc_plugin/bd.zsh ## if
