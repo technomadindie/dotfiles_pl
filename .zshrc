@@ -101,7 +101,10 @@ setopt PUSHD_SILENT         # Do not print the directory stack after pushd or po
 # ================================
 # Key Bindings
 # ================================
-bindkey -v
+## Choose -v : vi-mode
+## Choose -e : emacs-mode
+#bindkey -v
+bindkey -e
 export KEYTIMEOUT=1
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -109,10 +112,69 @@ echo -e '\e[5 q' ##enable cursor blink
 echo -ne '\e]12;#FF0000\a' # Change cursor color to red
 bindkey "^?" backward-delete-char ## To use backspace to delete words after insertmode->normalmode->insertmode
 ## Edit command line commands in $EDITOR
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
 
+##---- When in vi-mode --##
+#autoload -Uz edit-command-line
+#zle -N edit-command-line
+#bindkey -M vicmd v edit-command-line
+#source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
+##############################################################################################
+##---- When in emacs-mode --##
+# Function to set cursor shape
+function set_cursor_shape() {
+    local shape=$1
+    case $shape in
+        beam) echo -ne '\e[5 q';;
+        block) echo -ne '\e[1 q';;
+        underline) echo -ne '\e[3 q';;
+    esac
+}
+
+# Set beam shape cursor on startup
+set_cursor_shape beam
+
+# Load and modify edit-command-line widget
+autoload -Uz edit-command-line
+
+edit-command-line-wrapper() {
+    edit-command-line
+    set_cursor_shape beam
+    zle reset-prompt
+    zle -R
+}
+
+zle -N edit-command-line-wrapper
+bindkey '^X^E' edit-command-line-wrapper
+
+# Reset cursor shape before each prompt
+precmd() {
+    set_cursor_shape beam
+}
+
+# Reset cursor shape before executing a command
+preexec() {
+    set_cursor_shape beam
+}
+
+# Load add-zsh-hook
+autoload -Uz add-zsh-hook
+
+# Add hooks
+add-zsh-hook precmd precmd
+add-zsh-hook preexec preexec
+###################################################################################
+# Keybindings for Home and End keys
+bindkey '^[[H' beginning-of-line  # Home key
+bindkey '^[[F' end-of-line        # End key
+
+# Alternative keybindings (some terminals might use these)
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+
+# For some xterm
+bindkey '^[[7~' beginning-of-line
+bindkey '^[[8~' end-of-line
+####################################################################################
 #export EDITOR=vim
 #export ZVM_VI_EDITOR=$EDITOR
 #ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
@@ -145,5 +207,4 @@ zstyle ':fzf-tab:complete:ls*' fzf-preview 'ls --color $realpath'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
 source ~/zshrc_plugin/bd.zsh ## if
