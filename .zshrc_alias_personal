@@ -39,7 +39,7 @@ alias cat='bat --paging=never'
 
 # Git aliases
 alias gpush='git push origin HEAD' # means we are pushing current branch to remote branch of same name
-alias gpull='git fetch origin && git pull origin HEAD' # means we are pulling current branch to remote branch of same name
+alias gpull='git fetch origin && git pull origin' # means we are pulling current branch to remote branch of same name
 
 #alias gpush='git push origin HEAD:main' # means we are pushing current branch to remote branch "main"
 
