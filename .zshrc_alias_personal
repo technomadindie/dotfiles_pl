@@ -38,8 +38,10 @@ alias lc='wc -l'
 alias cat='bat --paging=never'
 
 # Git aliases
-alias gpush='git push origin HEAD:main'
-alias gpull='git fetch origin && git pull origin HEAD:main'
+alias gpush='git push origin HEAD' # means we are pushing current branch to remote branch of same name
+alias gpull='git fetch origin && git pull origin HEAD' # means we are pulling current branch to remote branch of same name
+
+#alias gpush='git push origin HEAD:main' # means we are pushing current branch to remote branch "main"
 
 # Custom aliases
 alias d='dirs -v'
