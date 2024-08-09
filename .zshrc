@@ -111,15 +111,19 @@ bindkey '^[[B' history-substring-search-down
 echo -e '\e[5 q' ##enable cursor blink
 echo -ne '\e]12;#FF0000\a' # Change cursor color to red
 bindkey "^?" backward-delete-char ## To use backspace to delete words after insertmode->normalmode->insertmode
-## Edit command line commands in $EDITOR
 
-##---- When in vi-mode --##
+# ================================
+# When in vi-mode 
+# ================================
+### Edit command line commands in $EDITOR
 #autoload -Uz edit-command-line
 #zle -N edit-command-line
 #bindkey -M vicmd v edit-command-line
 #source ~/zshrc_plugin/cursor_mode_vim ##cursor mode for vim
-##############################################################################################
-##---- When in emacs-mode --##
+
+# ================================
+# When in emacs-mode 
+# ================================
 # Function to set cursor shape
 function set_cursor_shape() {
     local shape=$1
@@ -162,7 +166,6 @@ autoload -Uz add-zsh-hook
 # Add hooks
 add-zsh-hook precmd precmd
 add-zsh-hook preexec preexec
-###################################################################################
 # Keybindings for Home and End keys
 bindkey '^[[H' beginning-of-line  # Home key
 bindkey '^[[F' end-of-line        # End key
@@ -174,11 +177,6 @@ bindkey '^[[4~' end-of-line
 # For some xterm
 bindkey '^[[7~' beginning-of-line
 bindkey '^[[8~' end-of-line
-####################################################################################
-#export EDITOR=vim
-#export ZVM_VI_EDITOR=$EDITOR
-#ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-#ZVM_VI_EDITOR=$EDITOR
 # ================================
 # FZF Setup
 # ================================
