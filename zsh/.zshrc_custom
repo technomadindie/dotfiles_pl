@@ -1,0 +1,20 @@
+
+# Add Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit light Aloxaf/fzf-tab
+
+# ================================
+# FZF-TAB Setup
+# ================================
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+#zstyle ':fzf-tab:*' switch-group '<' '>'
+#zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+zstyle ':completion:*:*:*:*' ignored-patterns 'p4'
+zstyle ':fzf-tab:complete:cd*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:ls*' fzf-preview 'ls --color $realpath'
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f  $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh

@@ -28,8 +28,8 @@ autoload -Uz _zinit
 # ================================
 # Load Custom Aliases
 # ================================
-[[ ! -f ~/.zshrc_alias_personal ]] || source ~/.zshrc_alias_personal 
-[[ ! -f ~/.zshrc_alias_nv ]] || source ~/.zshrc_alias_nv
+[[ ! -f $ZDOTDIR/.zshrc_alias_personal ]] || source $ZDOTDIR/.zshrc_alias_personal 
+[[ ! -f $ZDOTDIR/.zshrc_alias_nv ]] || source $ZDOTDIR/.zshrc_alias_nv
 
 # ================================
 # Welcome Message
@@ -39,12 +39,7 @@ echo "Welcome $USER! Hope you have a good day!"
 # ================================
 # Zinit Plugins
 # ================================
-
-# Add Powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
 # Add zsh plugins
-zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions 
 zinit light zsh-users/zsh-syntax-highlighting
@@ -73,7 +68,7 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 # ================================
 # History Settings
 # ================================
-HISTFILE=~/.histfile
+HISTFILE="$ZDOTDIR/.zhistory"
 HISTSIZE=100000
 SAVEHIST=100000
 setopt INC_APPEND_HISTORY    # Add commands to HISTFILE incrementally
@@ -115,7 +110,7 @@ bindkey "^?" backward-delete-char ## To use backspace to delete words after inse
 # ================================
 # When in vi-mode 
 # ================================
-### Edit command line commands in $EDITOR
+### Uncomment below lines to enable vi-mode
 #autoload -Uz edit-command-line
 #zle -N edit-command-line
 #bindkey -M vicmd v edit-command-line
@@ -177,6 +172,7 @@ bindkey '^[[4~' end-of-line
 # For some xterm
 bindkey '^[[7~' beginning-of-line
 bindkey '^[[8~' end-of-line
+
 # ================================
 # FZF Setup
 # ================================
@@ -190,19 +186,8 @@ export FZF_CTRL_T_OPTS="--preview '/home/utils/bat-0.23.0/bin/bat --style=number
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 alias cool-find='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 
-# ================================
-# FZF-TAB Setup
-# ================================
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' menu no
-#zstyle ':fzf-tab:*' switch-group '<' '>'
-#zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-zstyle ':completion:*:*:*:*' ignored-patterns 'p4'
-zstyle ':fzf-tab:complete:cd*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:ls*' fzf-preview 'ls --color $realpath'
+[[ ! -f  $ZDOTDIR/zshrc_plugin/bd.zsh ]] || source $ZDOTDIR/zshrc_plugin/bd.zsh ## if
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/zshrc_plugin/bd.zsh ## if
+## Advanced Settings
+[[ ! -f  $ZDOTDIR/.zshrc_custom ]] || source $ZDOTDIR/.zshrc_custom ## if
+
