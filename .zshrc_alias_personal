@@ -60,7 +60,7 @@ alias .-='cd -'
 
 # Other custom aliases
 alias re='realpath'
-alias fs='fd --type f | fzf'
+alias fs='fd --type f -H| fzf'
 alias swp_find='find . -type f -iname ".*" | grep swp'
 
 
