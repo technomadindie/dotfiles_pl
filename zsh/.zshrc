@@ -15,6 +15,11 @@ zmodload zsh/complist
 autoload -Uz compinit; compinit -u
 comp_options+=(globdots) # With hidden files
 zstyle ':completion:*' file-sort access
+autoload -Uz zmv
+setopt CORRECT # Offers spelling correction for mistyped commands.
+setopt BANG_HIST  # Enables history expansion with `!`.
+setopt ALIASES  # Enables alias expansion.
+setopt MARK_DIRS  # Appends a slash to directory names during completion.
 # ================================
 # Zinit Configuration
 # ================================
@@ -74,7 +79,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 setopt INC_APPEND_HISTORY    # Add commands to HISTFILE incrementally
 setopt EXTENDED_HISTORY      # Save timestamp and duration
-unsetopt SHARE_HISTORY       # Don't share history between sessions
+setopt SHARE_HISTORY       # Don't share history between sessions
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first
 setopt HIST_IGNORE_DUPS          # Don't record immediate duplicates
 setopt HIST_IGNORE_SPACE         # Ignore commands that start with space
