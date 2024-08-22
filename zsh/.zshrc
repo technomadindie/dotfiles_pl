@@ -14,7 +14,7 @@ fi
 zmodload zsh/complist
 autoload -Uz compinit; compinit -u
 comp_options+=(globdots) # With hidden files
-
+zstyle ':completion:*' file-sort access
 # ================================
 # Zinit Configuration
 # ================================
@@ -25,6 +25,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+#zstyle ':completion:*:*:-command-:*:*' group-order alias builtins functions commands
 # ================================
 # Load Custom Aliases
 # ================================
@@ -84,7 +85,9 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 # ================================
 setopt autocd notify
 zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+setopt AUTO_PARAM_SLASH #When a directory is completed, add a trailing slash instead of a space.
 
 # ================================
 # Auto-Pushd Settings
@@ -179,8 +182,8 @@ bindkey '^[[8~' end-of-line
 source ~/.fzf.zsh
 source ~/.fzf/shell/completion.zsh
 source ~/.fzf/shell/key-bindings.zsh
-export FZF_TMUX=1
-export FZF_TMUX_OPTS='-p80%,60%'
+#export FZF_TMUX=1
+#export FZF_TMUX_OPTS='-p80%,60%'
 export FZF_CTRL_T_COMMAND="fd --type f --hidden --exclude .git"
 export FZF_CTRL_T_OPTS="--preview '/home/utils/bat-0.23.0/bin/bat --style=numbers --color=always --line-range :500 {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
