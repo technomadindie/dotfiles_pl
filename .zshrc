@@ -15,6 +15,11 @@ zmodload zsh/complist
 autoload -Uz compinit; compinit -u
 comp_options+=(globdots) # With hidden files
 
+autoload -Uz zmv
+setopt CORRECT # Offers spelling correction for mistyped commands.
+setopt BANG_HIST  # Enables history expansion with `!`.
+setopt ALIASES  # Enables alias expansion.
+setopt MARK_DIRS  # Appends a slash to directory names during completion.
 # ================================
 # Zinit Configuration
 # ================================
@@ -78,7 +83,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 setopt INC_APPEND_HISTORY    # Add commands to HISTFILE incrementally
 setopt EXTENDED_HISTORY      # Save timestamp and duration
-unsetopt SHARE_HISTORY       # Don't share history between sessions
+setopt SHARE_HISTORY       # Don't share history between sessions
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first
 setopt HIST_IGNORE_DUPS          # Don't record immediate duplicates
 setopt HIST_IGNORE_SPACE         # Ignore commands that start with space
@@ -90,7 +95,6 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt autocd notify
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
 # ================================
 # Auto-Pushd Settings
 # ================================
@@ -180,7 +184,7 @@ bindkey '^[[8~' end-of-line
 # ================================
 # FZF Setup
 # ================================
-source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source ~/.fzf/shell/completion.zsh
 source ~/.fzf/shell/key-bindings.zsh
 export FZF_TMUX=1
@@ -206,3 +210,4 @@ zstyle ':fzf-tab:complete:ls*' fzf-preview 'ls --color $realpath'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source ~/zshrc_plugin/bd.zsh ## if
+

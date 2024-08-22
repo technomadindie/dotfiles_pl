@@ -10,6 +10,7 @@ alias dir='ls -l'
 alias hg='history | grep'
 alias po='popd'
 alias pu='pushd'
+alias n='nvim'
 
 alias gs='git status'
 alias ga='git add'
